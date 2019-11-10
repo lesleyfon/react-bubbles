@@ -14,7 +14,7 @@ function App() {
         <PrivateRoute 
           path = '/bubblepage'
           exact
-          component ={BubblePage}
+          component ={ BubblePage} 
         />
         {/* 
           Build a PrivateRoute component that will 
