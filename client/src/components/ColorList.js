@@ -12,7 +12,7 @@ const ColorList = ({ colors, updateColors }) => {
   const [colorToEdit, setColorToEdit] = useState(initialColor);
   useEffect(()=>{
 
-  },[colorToEdit.id])
+  },[colorToEdit.id,])
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
@@ -20,20 +20,35 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
-    console.log(colorToEdit)
     api().put(`/api/colors/${colorToEdit.id}`, colorToEdit)
-      .then(res=>{
+    .then(res=>{
+      // console.log(res.data)
       })
       .catch(err=>{
         throw new Error(err.response)
       })
-    // Make a put request to save your updated color
-    // think about where will you get the id from...
-    // where is is saved right now?
-  };
-
-  const deleteColor = color => {
-    // make a delete request to delete this color
+      api().put(`/api/colors/${colorToEdit.id}`, colorToEdit)
+      .then(res=>{
+        // console.log(res.data)
+      })
+      .catch(err=>{
+        throw new Error(err.response)
+      })
+      // Make a put request to save your updated color
+      // think about where will you get the id from...
+      // where is is saved right now?
+    };
+    
+    const deleteColor = color => {
+      // make a delete request to delete this color
+      api().delete(`/api/colors/${color.id}`)
+      .then(res=>{
+        window.location.reload();
+        })
+        .catch(err=>{
+          throw new Error(err.response)
+        })
+    console.log(color)
   };
 
   return (
