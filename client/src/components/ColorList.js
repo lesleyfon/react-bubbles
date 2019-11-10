@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import {Redirect} from 'react-router-dom'
+import api from "./../utils/api";
 
 const initialColor = {
   color: "",
@@ -7,10 +8,11 @@ const initialColor = {
 };
 
 const ColorList = ({ colors, updateColors }) => {
-  console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
+  useEffect(()=>{
 
+  },[colorToEdit.id])
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
@@ -18,6 +20,13 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
+    console.log(colorToEdit)
+    api().put(`/api/colors/${colorToEdit.id}`, colorToEdit)
+      .then(res=>{
+      })
+      .catch(err=>{
+        throw new Error(err.response)
+      })
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
