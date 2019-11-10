@@ -1,9 +1,10 @@
 import React, {useState} from "react";
+import api from './../utils/api'
 
 const Login = () => {
   const [user, setUser] = useState({ 
-    username: '', 
-    password: ''
+    username: 'Lambda School', 
+    password: 'i<3Lambd4'
    } )
 
    function handleLoginFormChange (e){
@@ -15,7 +16,15 @@ const Login = () => {
    }
    function handleLoginFormSubmit(e){
     e.preventDefault();
-    console.log(user)
+    api().post('/api/login', user)
+      .then(res=>{
+        localStorage.setItem('token', res.data.payload);
+        
+      })
+      .catch(err=>{
+        throw new Error(err.response)
+      })
+
    }
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
