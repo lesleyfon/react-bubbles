@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import api from './../utils/api'
 
-const Login = () => {
+const Login = (props) => {
   const [user, setUser] = useState({ 
     username: 'Lambda School', 
     password: 'i<3Lambd4'
@@ -19,7 +19,7 @@ const Login = () => {
     api().post('/api/login', user)
       .then(res=>{
         localStorage.setItem('token', res.data.payload);
-        
+        props.history.push('/bubblepage')
       })
       .catch(err=>{
         throw new Error(err.response)
