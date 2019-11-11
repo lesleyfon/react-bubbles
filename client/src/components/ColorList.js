@@ -115,8 +115,8 @@ export default ColorList;
 
  function AddColor() {
   const [colors, setColor] = useState({ 
-    color: '', 
-    code: '',
+    aColor: '', 
+    aCode: '',
     id : Date.now()
    })
 
@@ -128,9 +128,24 @@ export default ColorList;
      })
      
    }
+   function formatColor(color){
+    return {
+      color: color.aColor,
+      code:{
+        hex: color.aCode
+      },
+      id:  color.id
+    }
+  }
    function handleColorFormSubmit(e){
      e.preventDefault();
-     console.log(colors)
+
+     api().post('/api/colors', formatColor(colors))
+      .then(res=>{
+        console.log(res)
+      }).catch(err=>{
+        throw new Error(err.response)
+      })
      setColor({
       ...colors,
       [e.target.name]:'' || {hex: ''}
@@ -148,14 +163,14 @@ export default ColorList;
     <form onSubmit={ handleColorFormSubmit }>
         <input 
           type='text'
-          name = 'color'
-          value = {colors.color}
+          name = 'aColor'
+          value = {colors.aColor}
           onChange={ handleColorFormChange}
         />
         <input 
           type='text'
-          name = 'code'
-          value = {colors.code.hex}
+          name = 'aCode'
+          value = {colors.aCode}
           onChange={ handleColorFormChange}
         />
         <button>Submit</button>
