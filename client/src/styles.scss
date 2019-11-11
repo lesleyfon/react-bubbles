@@ -28,10 +28,11 @@ body,
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .colors-wrap {
-  height: 110%;
+  height: 100%;
   width: 300px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 

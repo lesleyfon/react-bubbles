@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {Redirect} from 'react-router-dom'
 import api from "./../utils/api";
 
 const initialColor = {
@@ -29,7 +28,7 @@ const ColorList = ({ colors, updateColors }) => {
       })
       api().put(`/api/colors/${colorToEdit.id}`, colorToEdit)
       .then(res=>{
-        // console.log(res.data)
+        window.location.reload();
       })
       .catch(err=>{
         throw new Error(err.response)
@@ -55,7 +54,7 @@ const ColorList = ({ colors, updateColors }) => {
     <div className="colors-wrap">
       <p>colors</p>
       <ul>
-        {colors.map(color => (
+        {colors.map(color => ( 
           <li key={color.color} onClick={() => editColor(color)}>
             <span>
               <span className="delete" onClick={e => {
@@ -106,8 +105,60 @@ const ColorList = ({ colors, updateColors }) => {
       )}
       <div className="spacer" />
       {/* stretch - build another form here to add a color */}
+      <AddColor />
     </div>
   );
 };
 
 export default ColorList;
+
+
+ function AddColor() {
+  const [colors, setColor] = useState({ 
+    color: '', 
+    code: '',
+    id : Date.now()
+   })
+
+   function handleColorFormChange (e){
+     setColor({
+       ...colors,
+       [e.target.name]: e.target.value || {hex: e.target.value}
+       //code: 
+     })
+     
+   }
+   function handleColorFormSubmit(e){
+     e.preventDefault();
+     console.log(colors)
+     setColor({
+      ...colors,
+      [e.target.name]:'' || {hex: ''}
+      //code: 
+    })
+   }
+  //  {
+  //   color: "aqua",
+  //   code: {
+  //     hex: "#00ffff"
+  //   },
+  //   id: 3
+  // },
+  return (
+    <form onSubmit={ handleColorFormSubmit }>
+        <input 
+          type='text'
+          name = 'color'
+          value = {colors.color}
+          onChange={ handleColorFormChange}
+        />
+        <input 
+          type='text'
+          name = 'code'
+          value = {colors.code.hex}
+          onChange={ handleColorFormChange}
+        />
+        <button>Submit</button>
+    </form>
+  )
+}
