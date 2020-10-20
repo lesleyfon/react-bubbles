@@ -28,6 +28,7 @@ body,
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .colors-wrap {
@@ -59,7 +60,9 @@ body,
   border: 1px lightgray solid;
   margin-right: 36px;
 }
-
+h1{
+  position: absolute;
+}
 form {
   margin-top: 60px;
   display: flex;
